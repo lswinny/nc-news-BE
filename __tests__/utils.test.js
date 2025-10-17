@@ -39,7 +39,7 @@ describe("convertTimestampToDate", () => {
   });
 });
 
-describe.only("createLookupObj", () => {
+describe("createLookupObj", () => {
   test("returns a new object", () => {
     const arr = [{1: "apple", 2: "banana", 3: "mango"}, {1: "fig", 2: "pomegranate", 3: "blueberry"}]
     const key = 3
@@ -48,11 +48,28 @@ describe.only("createLookupObj", () => {
     expect(output).toBeObject();
   });
   test("returns one key-value pair in an object when given an array of objects", () => {
+    const arr = [{1: "apple", 2: "banana", 3: "mango"}]
+    const key = 3
+    const value = 1
+    output = createLookupObj(arr, key, value)
+    expected = { "mango":"apple"}
+    expect(output).toBeObject(expected);
+  });
+    test("returns multiple key-value pair in an object when given an array of objects", () => {
     const arr = [{1: "apple", 2: "banana", 3: "mango"}, {1: "fig", 2: "pomegranate", 3: "blueberry"}]
     const key = 3
     const value = 1
     output = createLookupObj(arr, key, value)
-    expect(output).toBeObject();
+    expected = { "mango":"apple", "blueberry":"fig" }
+    expect(output).toBeObject(expected);
   });
-  
+      test("does not mutate original input", () => {
+    const arr = [{1: "apple", 2: "banana", 3: "mango"}, {1: "fig", 2: "pomegranate", 3: "blueberry"}]
+    const copyArr = [...arr]
+    const key = 3
+    const value = 1
+    createLookupObj(arr, key, value)
+    expect(arr).toEqual(copyArr);
+  });
+
 });
