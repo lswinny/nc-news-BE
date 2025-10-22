@@ -22,9 +22,3 @@ module.exports = [
       "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
   },
 ];
-
-/*
-INSERT INTO users (username, name, avatar_url)
-VALUES
-()
-*/
