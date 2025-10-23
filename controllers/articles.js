@@ -2,6 +2,7 @@ const {
   readArticles,
   readArticleById,
   addComment,
+  updateArticleVotes,
 } = require("../models/articles");
 
 const getArticles = (req, res, next) => {
@@ -37,8 +38,28 @@ const postComment = (req, res, next) => {
     });
 };
 
+const patchArticleVotes = (req, res, next) => {
+  const { article_id } = req.params;
+  const { inc_votes } = req.body;
+
+  if (typeof inc_votes !== "number") {
+    return next({
+      status: 400,
+      msg: "Bad request: inc_votes must be a number",
+    });
+  }
+  
+return updateArticleVotes(article_id, inc_votes)
+    .then((article) => {
+      res.status(200).send({ article });
+    }).catch((err) => {
+      next(err)
+    });
+};
+
 module.exports = {
   getArticles,
   getArticleById,
   postComment,
+  patchArticleVotes,
 };

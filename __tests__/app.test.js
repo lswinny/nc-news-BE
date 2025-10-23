@@ -168,4 +168,118 @@ describe("POST /api/articles/:article_id/comments", () => {
         expect(typeof comment.created_at).toBe("string");
       });
   });
+  test("400: Responds with error message when post lacks the required fields", () => {
+    const newComment = { author: "butter_bridge" };
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad request: Missing required fields");
+      });
+  });
+  test("400: Responds with error message when article_id is not a number", () => {
+    const newComment = {
+      author: "butter_bridge",
+      body: "BODY DATA",
+    };
+    return request(app)
+      .post("/api/articles/not_an_article/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(
+          "Bad request: Please check the format of your input"
+        );
+      });
+  });
+  test("404: Responds with error message when article_id is valid but does not exist", () => {
+    const newComment = {
+      author: "butter_bridge",
+      body: "BODY DATA",
+    };
+
+    return request(app)
+      .post("/api/articles/860/comments")
+      .send(newComment)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
+      });
+  });
+});
+describe("PATCH /api/articles/:article_id", () => {
+  test("200: Responds with increased number of votes in an article when given an article_id", () => {
+    const update = { inc_votes: 10 };
+
+    return request(app)
+      .patch("/api/articles/2")
+      .send(update)
+      .expect(200)
+      .then(({ body }) => {
+        const article = body.article;
+        expect(article.article_id).toBe(2);
+          expect(typeof article.votes).toBe("number");
+        expect(article.votes).toBe(10);
+      });
+  });
+  test("200: Responds with reduced number of votes in an article when given an article_id", () => {
+    const update = { inc_votes: -100 };
+
+    return request(app)
+      .patch("/api/articles/2")
+      .send(update)
+      .expect(200)
+      .then(({ body }) => {
+        const article = body.article;
+        expect(article.article_id).toBe(2);
+          expect(typeof article.votes).toBe("number");
+        expect(article.votes).toBe(-100);
+      });
+  });
+  test("400: Responds with error message when patch lacks the required fields", () => {
+    const update = {};
+    return request(app)
+      .patch("/api/articles/2")
+      .send(update)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad request: inc_votes must be a number");
+      });
+  });
+  test("400: Responds with error message when inc_votes is not a number", () => {
+    const update = { inc_votes: "lemons"};
+    return request(app)
+      .patch("/api/articles/2")
+      .send(update)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(
+          "Bad request: inc_votes must be a number"
+        );
+      });
+  });
+  test("400: Responds with error message when given an invalid article_id", () => {
+    const update = { inc_votes: 10};
+    return request(app)
+      .patch("/api/articles/not_an_article")
+      .send(update)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(
+          "Bad request: Please check the format of your input"
+        );
+      });
+  });
+  test("404: Responds with error message when article_id is valid but does not exist", () => {
+    const update = {inc_votes: 10};
+
+    return request(app)
+      .patch("/api/articles/678")
+      .send(update)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
+      });
+  });
 });
