@@ -17,7 +17,7 @@ function handlePsqlErrors(err, req, res, next) {
 }
 
 function handleServerErrors(err, req, res, next) {
-  console.log("Hello from Error Handling Middleware", err);
+  console.error("Hello from Error Handling Middleware 500", err);
   res.status(500).send({ msg: "Internal Server Error" });
 }
 
