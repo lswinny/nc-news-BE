@@ -9,31 +9,47 @@ function checkArticleExists(article_id) {
       }
     });
 }
-///////////
-function readArticles(sort_by, order) {
-  return db
-    .query(
+function readArticles(sort_by = "created_at", order = "desc", topic) {
+
+  const validSortColumns = ["title", "topic", "author", "votes", "comment_count", "created_at"];
+  const validOrders = ["asc", "desc"];
+
+  if (!validSortColumns.includes(sort_by) || !validOrders.includes(order)) {
+    return Promise.reject({ status: 400, msg: "Invalid sort_by or order value" });
+  } 
+  
+  const queryValues = []
+  let queryString = 
       `SELECT articles.author, articles.title, articles.article_id, articles.topic, articles.created_at, articles.votes, articles.article_img_url,
-        COUNT(comments.comment_id) AS comment_count
+        COUNT(comments.comment_id)::INT AS comment_count
       FROM articles
-      LEFT JOIN comments ON comments.article_id = articles.article_id
-      GROUP BY articles.article_id
-      ORDER BY ${sort_by} ${order};`
-    )
-    .then(({ rows }) => {
+      LEFT JOIN comments ON comments.article_id = articles.article_id`;
+  
+      if(topic) {
+        queryValues.push(topic);
+        queryString += ` WHERE articles.topic = $1`
+      }
+
+      queryString += ` GROUP BY articles.article_id ORDER BY ${sort_by} ${order}`
+      
+      return db.query(queryString, queryValues).then(({ rows }) => {
       if (rows.length === 0) {
         return Promise.reject({ status: 404, msg: "No articles found" });
-      }
-      return rows;
-    });
+      } return rows;
+    })
 }
 
+    
 function readArticleById(article_id) {
   return db
     .query(
-      `SELECT articles.author, articles.title, articles.article_id, articles.body, articles.topic, articles.created_at, articles.votes, articles.article_img_url
-      FROM articles WHERE article_id = $1`,
-      [article_id]
+      `SELECT articles.author, articles.title, articles.article_id, articles.body, articles.topic, articles.created_at, articles.votes, articles.article_img_url,
+      COUNT(comments.comment_id)::INT AS comment_count
+      FROM articles
+      LEFT JOIN comments ON comments.article_id = articles.article_id 
+      WHERE articles.article_id = $1 
+      GROUP BY articles.article_id`
+      ,[article_id]
     )
     .then(({ rows }) => {
       if (rows.length === 0) {

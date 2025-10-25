@@ -7,25 +7,12 @@ const {
 
 const getArticles = (req, res, next) => {
 
-  const { sort_by = "created_at", order = "desc" } = req.query;
-  const validSortColumns = [
-    "title",
-    "topic",
-    "author",
-    "votes",
-    "comment_count",
-    "created_at"
-  ];
-  const validOrders = ["asc", "desc"];
-
-  if (!validSortColumns.includes(sort_by) || !validOrders.includes(order)) {
-    return next({ status: 400, msg: "Invalid sort_by column or order value" });
-  }
-
-  readArticles(sort_by, order)
+  const { sort_by = "created_at", order = "desc", topic } = req.query;
+ 
+  readArticles(sort_by, order, topic)
     .then((articles) => {
       res.status(200).send({ articles });
-    })
+})
     .catch((err) => {
       next(err);
     });

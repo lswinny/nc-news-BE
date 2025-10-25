@@ -52,7 +52,7 @@ describe("GET /api/topics", () => {
 describe("GET /api/articles", () => {
   const validColumns = ["title", "topic", "author", "votes", "created_at"];
 
-  test("200: Responds with all articles", () => {
+  test("200: Responds with all articles when no filters applied", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -68,7 +68,7 @@ describe("GET /api/articles", () => {
           expect(typeof article.created_at).toBe("string");
           expect(typeof article.votes).toBe("number");
           expect(typeof article.article_img_url).toBe("string");
-          expect(typeof article.comment_count).toBe("string");
+          expect(typeof article.comment_count).toBe("number");
         });
       });
   });
@@ -100,12 +100,24 @@ describe("GET /api/articles", () => {
       })
     );
   });
+  test("200: Responds with articles filtered by a specified existing topic query", () => {
+    return request(app)
+      .get(`/api/articles?topic=cats`)
+      .expect(200)
+      .then(({ body }) => {
+        expect(Array.isArray(body.articles)).toBe(true);
+        expect(body.articles.length).toEqual(1);
+        body.articles.forEach((article) => {
+          expect(article.topic).toBe("cats");
+        });
+      });
+  });
   test("400: Responds with error for invalid sort_by column", () => {
     return request(app)
       .get("/api/articles?sort_by=treehugger&order=asc")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("Invalid sort_by column or order value");
+        expect(body.msg).toBe("Invalid sort_by or order value");
       });
   });
   test("400: Responds with error for invalid order value", () => {
@@ -113,10 +125,17 @@ describe("GET /api/articles", () => {
       .get("/api/articles?sort_by=title&order=treehugger")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("Invalid sort_by column or order value");
+        expect(body.msg).toBe("Invalid sort_by or order value");
       });
   });
-
+  test("404: Responds with error for non-existant topic", () => {
+    return request(app)
+      .get("/api/articles?topic=scuba%20diving")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("No articles found");
+      });
+  });
 });
 describe("GET /api/users", () => {
   test("200: Responds with all users", () => {
@@ -136,7 +155,7 @@ describe("GET /api/users", () => {
   });
 });
 describe("GET /api/articles/:article_id", () => {
-  test("200: Responds with an article by its article_id", () => {
+  test("200: Responds with an article by its article_id, including comment count", () => {
     return request(app)
       .get("/api/articles/2")
       .expect(200)
@@ -152,8 +171,9 @@ describe("GET /api/articles/:article_id", () => {
         expect(typeof article.created_at).toBe("string");
         expect(typeof article.votes).toBe("number");
         expect(typeof article.article_img_url).toBe("string");
+        expect(typeof article.comment_count).toBe("number");
       });
-  }); 
+  });
   test("400: Responds with error message when request for article_id is invalid type", () => {
     return request(app)
       .get("/api/articles/not_an_article")
@@ -212,7 +232,7 @@ describe("GET /api/articles/:id/comments", () => {
     return request(app)
       .get("/api/articles/2/comments")
       .expect(200)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("No comments found");
       });
   });
