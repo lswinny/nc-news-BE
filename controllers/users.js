@@ -1,6 +1,6 @@
 const { readUsers } = require("../models/users")
 
-const getUsers = (req, res) => {
+const getUsers = (req, res, next) => {
     readUsers().then((users) => {
         res.status(200).send({users});
     }).catch((err) => {
