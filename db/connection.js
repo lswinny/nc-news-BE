@@ -15,6 +15,14 @@ if (ENV === "production") {
   config.max = 2;
 }
 
+console.log("Connecting to:", ENV === "production" ? process.env.DATABASE_URL : process.env.PGDATABASE);
+
+if (ENV === "production" && !process.env.DATABASE_URL) {
+  console.error("DATABASE_URL is missing in production");
+}
+
+
 const db = new Pool(config);
+
 
 module.exports = db;
