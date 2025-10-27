@@ -3,7 +3,7 @@ const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
 
 const request = require("supertest");
-const app = require("../middlewear/app.js");
+const app = require("../app.js");
 const comments = require("../db/data/test-data/comments.js");
 const jestSorted = require("jest-sorted");
 
