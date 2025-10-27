@@ -10,17 +10,17 @@ const { getCommentsByArticleId, deleteComment } = require("../controllers/commen
 app.use(express.json());
 
 app.get("/api/", getServerHealthCheck);
-app.get("/api/topics", getTopics);
-app.get("/api/articles", getArticles);
-app.get("/api/users", getUsers);
 app.get("/api/articles/:article_id", getArticleById);
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
+app.get("/api/articles", getArticles);
+app.get("/api/topics", getTopics);
+app.get("/api/users", getUsers);
 app.post("/api/articles/:article_id/comments", postComment)
 app.patch("/api/articles/:article_id", patchArticleVotes);
 app.delete("/api/comments/:comment_id", deleteComment);
 
-app.use(handleCustomErrors);
 app.use(handlePsqlErrors);
+app.use(handleCustomErrors);
 app.use(handleServerErrors);
 app.use((req, res) => {
   res.status(404).send({ msg: "Path not found" });

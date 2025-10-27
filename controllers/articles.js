@@ -4,25 +4,36 @@ const {
   addComment,
   updateArticleVotes,
 } = require("../models/articles");
-
-const getArticles = (req, res, next) => {
-
-  const { sort_by = "created_at", order = "desc", topic } = req.query;
- 
-  readArticles(sort_by, order, topic)
-    .then((articles) => {
-      res.status(200).send({ articles });
-})
-    .catch((err) => {
-      next(err);
-    });
-};
+const { checkTopicExists } = require("../models/topics");
 
 const getArticleById = (req, res, next) => {
   const { article_id } = req.params;
   return readArticleById(article_id)
     .then((article) => {
       res.status(200).send({ article: article });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+const getArticles = (req, res, next) => {
+  const { sort_by = "created_at", order = "desc", topic } = req.query;
+
+  topicCheck = topic ? checkTopicExists(topic) : Promise.resolve();
+  topicCheck
+    .then(() => {
+      return readArticles(sort_by, order, topic);
+    })
+    .then((articles) => {
+      if (articles.length === 0) {
+        res.status(200).send({
+          articles: [],
+          msg: "Topic exists but has no associated articles",
+        });
+      } else {
+        res.status(200).send({ articles });
+      }
     })
     .catch((err) => {
       next(err);

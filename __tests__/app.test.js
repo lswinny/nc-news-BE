@@ -112,6 +112,15 @@ describe("GET /api/articles", () => {
         });
       });
   });
+  test("200: Topic exists but has no associated articles", () => {
+    return request(app)
+      .get("/api/articles?topic=paper")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articles).toEqual([]);
+        expect(body.msg).toBe("Topic exists but has no associated articles");
+      });
+  });
   test("400: Responds with error for invalid sort_by column", () => {
     return request(app)
       .get("/api/articles?sort_by=treehugger&order=asc")
@@ -133,7 +142,7 @@ describe("GET /api/articles", () => {
       .get("/api/articles?topic=scuba%20diving")
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("No articles found");
+        expect(body.msg).toBe("No topic found");
       });
   });
 });
@@ -210,6 +219,14 @@ describe("GET /api/articles/:id/comments", () => {
         });
       });
   });
+  test("200: Responds with an empty array when article_id exists but has no associated comments", () => {
+    return request(app)
+      .get("/api/articles/2/comments")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.msg).toBe("No comments found");
+      });
+  });
   test("400: Responds with an error message when a request is made for an invalid article_id", () => {
     return request(app)
       .get("/api/articles/not_an_article/comments")
@@ -226,14 +243,6 @@ describe("GET /api/articles/:id/comments", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("No articles found");
-      });
-  });
-  test("200: Responds with an empty array when article_id exists but has no associated comments", () => {
-    return request(app)
-      .get("/api/articles/2/comments")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.msg).toBe("No comments found");
       });
   });
 });
