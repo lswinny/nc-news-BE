@@ -1,0 +1,106 @@
+h1 {border: solid 30px rgb(26, 10, 51);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 100;
+}
+
+
+header {
+    background-color:rgb(26, 10, 51);
+    color:rgb(198, 156, 226);
+    border: solid 5px rgb(26, 10, 51);
+}
+
+main {
+    background-color:rgb(26, 10, 51);
+    padding: 5rem;
+}
+
+.p1 {
+    background-color:rgb(26, 10, 51);
+    color:blueviolet;
+    border: solid 30px rgb(26, 10, 51);
+    font-size: large;
+}
+
+p {
+    background-color:rgb(26, 10, 51);
+    color:blueviolet;
+    font-size: large;
+}
+
+h2 {
+    background-color:rgb(26, 10, 51);
+    color: rgb(43, 205, 226);
+    border: solid 50px rgb(26, 10, 51);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+    list-style-position: inside;
+    padding: 0.5em;
+}
+
+h3 {
+    margin: 10px;
+}
+
+.health-section {
+    background-color: rgb(2, 71, 33);
+    color:blanchedalmond;
+}
+
+.articles-section {
+    background-color: rgb(10, 112, 53);
+    color:blanchedalmond;
+}
+
+.p2 {
+    background-color: rgb(10, 112, 53);
+    color:blanchedalmond;
+}
+
+.comments-section {
+    background-color: rgb(37, 156, 67);
+    color:blanchedalmond;
+}
+
+.topics-section {
+    background-color: rgb(1, 177, 39);
+    color:blanchedalmond;
+}
+
+.users-section {
+    background-color: rgb(105, 197, 44);
+    color:blanchedalmond;
+}
+
+ #treat-section {
+    background-color: rgb(26, 10, 51);
+    color:rgb(30, 179, 166);
+}
+
+button {
+    background-color: blueviolet;
+  padding: 2rem;  
+}
+
+button:hover {
+    background-color: mediumturquoise;
+    
+}
+
+footer {
+    background-color: rgb(26, 10, 51);
+    color:rgb(238, 201, 82) 
+}
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Documentation</title>
+    <link rel="stylesheet" href="./styles.css" />
+
+  </head>
+  <body>
+    <header>
+      <h1>NC News API Documentation</h1>
+    </header>
+<main>
+    <p class="p1">Hello World, let's navigate NC News!</p>
+    <h2>Navigation</h2>
+
+<nav>
+  <section class="health-section">
+    <h3>/api/health</h3>
+    <ul>
+      <li>
+        <strong>GET</strong>: Check that the server is running properly
+      </li>
+    </ul>
+  </section>
+
+  <section class="articles-section">
+    <h3>/api/articles</h3>
+    <ul>
+      <li><strong>GET</strong>: Retrieve a list of all articles</li>
+    </ul>
+    <p class="p2">This endpoint supports the following query parameters:</p>
+    <ol>
+      <li>
+        <strong>sort_by</strong>: Sort articles by title, topic, author,
+        votes, or created_at.
+        <br />
+        Example: <code>/api/articles?sort_by=title&order=asc</code>
+      </li>
+      <li>
+        <strong>topic</strong>: Filter articles by topic.
+        <br />
+        Example: <code>/api/articles?topic=cats</code>
+      </li>
+    </ol>
+  </section>
+
+  <section class="articles-section">
+    <h3>/api/articles/:article_id</h3>
+    <ul>
+      <li><strong>GET</strong>: Retrieve a specific article by its ID</li>
+      <li><strong>PATCH</strong>: Update fields of a specific article</li>
+    </ul>
+  </section>
+
+  <section class="comments-section">
+    <h3>/api/articles/:article_id/comments</h3>
+    <ul>
+      <li><strong>GET</strong>: Get all comments for a specific article</li>
+      <li>
+        <strong>POST</strong>: Add a new comment to a specific article
+      </li>
+    </ul>
+  </section>
+
+  <section class="comments-section">
+    <h3>/api/comments/:comment_id</h3>
+    <ul>
+      <li><strong>DELETE</strong>: Remove a specific comment by its ID</li>
+    </ul>
+  </section>
+
+  <section class="topics-section">
+    <h3>/api/topics</h3>
+    <ul>
+      <li><strong>GET</strong>: Retrieve a list of all topics</li>
+    </ul>
+  </section>
+
+  <section class="users-section">
+    <h3>/api/users</h3>
+    <ul>
+      <li><strong>GET</strong>: Retrieve a list of all users</li>
+    </ul>
+  </section>
+  </nav>
+
+        <section id="treat-section">
+        <h2><em> ...That's all folks! Replenish your energy levels before you go?</em></h2>
+        <p> ...Yes please! Mindfulness is a powerful thing; click the button below as many times as you need to clear your mind... then go off and enjoy the rest of your day with a spring in your step. </p>
+        <button> Breathe in, breathe out, click, repeat...</button>
+        <p> YMMV: If it isn't working yet, keep going, trust the process...</p>
+    </section>
+</main>
+<footer>
+    Version: v1.0.0
+</footer>
+  </body>
+</html>

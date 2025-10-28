@@ -8,8 +8,9 @@ const { getUsers } = require("./controllers/users");
 const { getCommentsByArticleId, deleteComment } = require("./controllers/comments")
 
 app.use(express.json());
+app.use('/api', express.static('public'));
 
-app.get("/api/", getServerHealthCheck);
+app.get("/api/health", getServerHealthCheck);
 app.get("/api/articles/:article_id", getArticleById);
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
 app.get("/api/articles", getArticles);

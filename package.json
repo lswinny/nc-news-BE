@@ -11,8 +11,9 @@
     "prepare": "husky install",
     "test-seed": "jest seed.test.js",
     "start": "node listen.js",
-    "start nodemon": "nodemon listen.js"
-  },
+    "nodemon": "nodemon listen.js",
+    "lint:html": "htmlhint ./public/index.html"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/northcoders/be-nc-news.git"
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/northcoders/be-nc-news#readme",
   "devDependencies": {
+    "htmlhint": "^1.7.1",
     "husky": "^8.0.2",
     "jest": "^27.5.1",
     "jest-extended": "^2.0.0",

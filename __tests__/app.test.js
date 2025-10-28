@@ -15,13 +15,13 @@ afterAll(() => {
   return db.end();
 });
 
-describe("GET /api/", () => {
-  test("200: Responds with the core API page message", () => {
+describe("GET /api/health", () => {
+  test("200: Responds with the server health check message", () => {
     return request(app)
-      .get("/api/")
+      .get("/api/health")
       .expect(200)
       .then((response) => {
-        expect(response.text).toBe("Welcome!");
+        expect(response.text).toBe("Healthy Server!");
       });
   });
   test("404: Responds with not found for an invalid path", () => {
@@ -202,7 +202,7 @@ describe("GET /api/articles/:article_id", () => {
       });
   });
 });
-describe("GET /api/articles/:id/comments", () => {
+describe("GET /api/articles/:article_id/comments", () => {
   test("200: Responds with all comments with a particular article_id", () => {
     return request(app)
       .get("/api/articles/3/comments")
