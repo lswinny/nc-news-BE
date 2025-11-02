@@ -1,6 +1,3 @@
-h1 {border: solid 30px rgb(26, 10, 51);
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +6,8 @@ h1 {border: solid 30px rgb(26, 10, 51);
   font-weight: 100;
 }
 
+h1 {border: solid 30px rgb(26, 10, 51);
+}
 
 header {
     background-color:rgb(26, 10, 51);
@@ -21,6 +20,25 @@ main {
     padding: 5rem;
 }
 
+button {
+    background-color: blueviolet;
+    padding: 0.5rem; 
+}
+
+button:hover {
+    background-color: mediumturquoise;
+}
+
+.inline-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inline-item span {
+  flex: 1;
+}
+
 .p1 {
     background-color:rgb(26, 10, 51);
     color:blueviolet;
@@ -28,15 +46,9 @@ main {
     font-size: large;
 }
 
-p {
-    background-color:rgb(26, 10, 51);
-    color:blueviolet;
-    font-size: large;
-}
-
 h2 {
     background-color:rgb(26, 10, 51);
-    color: rgb(43, 205, 226);
+    color: rgb(78, 180, 53);
     border: solid 50px rgb(26, 10, 51);
 }
 
@@ -57,6 +69,11 @@ h3 {
 .health-section {
     background-color: rgb(2, 71, 33);
     color:blanchedalmond;
+}
+
+#status-message-health {
+    background-color: rgb(2, 71, 33);
+    color:rgb(34, 216, 95);
 }
 
 .articles-section {
@@ -82,21 +99,6 @@ h3 {
 .users-section {
     background-color: rgb(105, 197, 44);
     color:blanchedalmond;
-}
-
- #treat-section {
-    background-color: rgb(26, 10, 51);
-    color:rgb(30, 179, 166);
-}
-
-button {
-    background-color: blueviolet;
-  padding: 2rem;  
-}
-
-button:hover {
-    background-color: mediumturquoise;
-    
 }
 
 footer {
