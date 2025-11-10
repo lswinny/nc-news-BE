@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
 const { handleCustomErrors, handlePsqlErrors, handleServerErrors} = require("./controllers/app_error_handling");
 const { getServerHealthCheck } = require("./controllers/serverHealthCheck");
@@ -7,6 +8,7 @@ const { getArticles, getArticleById, postComment, patchArticleVotes } = require(
 const { getUsers } = require("./controllers/users");
 const { getCommentsByArticleId, deleteComment } = require("./controllers/comments")
 
+app.use(cors());
 app.use(express.json());
 app.use('/api', express.static('public'));
 
