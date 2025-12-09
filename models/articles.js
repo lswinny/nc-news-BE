@@ -40,7 +40,7 @@ function readArticles(sort_by = "created_at", order = "desc", topic) {
   }
 
   queryString += ` GROUP BY articles.article_id ORDER BY ${sort_by} ${order}`;
-
+  
   return db.query(queryString, queryValues).then(({ rows }) => {
     return rows;
   });
