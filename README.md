@@ -33,3 +33,5 @@ Run all tests across all test files using terminal command:
 
 To run a specific test suite, use ``` npm t ``` followed by the test file name.
 
+# Run locally (with live response to edits)
+``` npm run nodemon ``` + run the fronend repo.
